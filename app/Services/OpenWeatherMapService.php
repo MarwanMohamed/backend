@@ -46,7 +46,6 @@ class OpenWeatherMapService implements WeatherServiceInterface
 				$tempMax[] = $list->main->temp_max;
 				$tempMin[] = $list->main->temp_min;
 				$icon[] = $list->weather[0]->icon.".png";
-				$date[] = $list->dt_txt;
 			}
 			
 			$cityname = $weather->city->name;
@@ -56,7 +55,6 @@ class OpenWeatherMapService implements WeatherServiceInterface
 				'max' => $tempMax,
 				'min' => $tempMin,
 				'icon' => $icon,
-				'date' => $date
 			];
 
 		} else {
