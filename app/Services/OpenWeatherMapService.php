@@ -10,19 +10,21 @@ class OpenWeatherMapService implements WeatherServiceInterface
 	private $appId;
 	
 	public function __construct()
-	{
+	{	
+		// get config from .env file
 		if (config('OpenWeatherMap.url') && config('OpenWeatherMap.appId')) {
 			$this->url = config('OpenWeatherMap.url');
 			$this->units = config('OpenWeatherMap.units');
 			$this->appId = config('OpenWeatherMap.appId');
 		} else {
-			throw new \Exception("APPURL Or APPID Not Found, Please check .env file", 1);
+			throw new \Exception(trans('error.apiConfig'), 1);
 		}
 	}
 
 	
 	public function getTemperature($city, $day) 
-	{
+	{	
+		//prepare url to the api
 		$queryParameters = http_build_query([
 			'id' => $city,
 			'cnt' => $day,
@@ -31,7 +33,7 @@ class OpenWeatherMapService implements WeatherServiceInterface
 		]);
 
 		$url = "{$this->url}?{$queryParameters}";
-
+		//get contents from OpenWeatherMap api
 		$contents = @file_get_contents($url);
 
 		if ($contents) {
@@ -58,7 +60,7 @@ class OpenWeatherMapService implements WeatherServiceInterface
 			];
 
 		} else {
-			throw new \Exception("Please Check your city or date", 1);
+			throw new \Exception(trans('error.missingData'), 1);
 		}
 	}
 }
