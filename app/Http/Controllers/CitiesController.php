@@ -4,18 +4,34 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\City;
+use App\Repository\CitiesRepository;
 
 class CitiesController extends Controller
 {
-    /*
-	 *	return all cities from database
-	*/
+	/**
+     * The CitiesRepository instance.
+     *
+     * @var CitiesRepository
+     */
+    private $citiesRepository;
 
-    public function getCities()
+    /**
+     * Create a new CitiesRepository instance.
+     *
+     * @return void
+     */
+    public function __construct()
     {
-    	return City::all();
+        $this->citiesRepository = new CitiesRepository();
     }
 
+    /**
+	 *	get all cities from repository class
+	*/
+    public function getCities()
+    {
+    	return $this->citiesRepository->getCities();
+    }
 }
 
 
