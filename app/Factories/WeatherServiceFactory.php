@@ -3,6 +3,7 @@
 namespace App\Factories;
 
 use App\Services\OpenWeatherMapService;
+use App\Services\MultipleSourcesService;
 
 class WeatherServiceFactory
 {
@@ -13,10 +14,12 @@ class WeatherServiceFactory
 
 	public static function make($weatherServiceName) {
 		switch($weatherServiceName) {
-			case 'OpenWeatherMap':
+			case 'OpenWeatherMapService':
 				return new OpenWeatherMapService();
+			case 'MultipleSourcesService':
+				return new MultipleSourcesService();
 			default:
-				return null;
+				throw new \Exception(trans('error.classNotFound'), 1);
 		}
 	}
 }

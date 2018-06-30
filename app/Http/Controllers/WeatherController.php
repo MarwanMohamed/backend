@@ -24,9 +24,8 @@ class WeatherController extends Controller
 		$day = Carbon::parse($day);
 		$numberOfDays = ($day->diffInDays(Carbon::now()->subHours(23)));
 		//call the api to get temperature
-		$temperatureService = WeatherServiceFactory::make('OpenWeatherMap');
+		$temperatureService = WeatherServiceFactory::make('MultipleSourcesService');
 		$temperature = $temperatureService->getTemperature($city, $numberOfDays);
-
 		return response()->json($temperature, 200);
 	}
 }

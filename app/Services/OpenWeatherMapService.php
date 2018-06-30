@@ -5,10 +5,27 @@ namespace App\Services;
 class OpenWeatherMapService implements WeatherServiceInterface 
 {
 
+	/**
+     * @var url
+     */
 	private $url;
+
+	/**
+     * @var units
+     */
 	private $units;
+	
+	/**
+     * @var appId
+     */
 	private $appId;
 	
+
+    /**
+     * get api config from .env file
+     *
+     * @return void
+     */
 	public function __construct()
 	{	
 		// get config from .env file
@@ -21,20 +38,30 @@ class OpenWeatherMapService implements WeatherServiceInterface
 		}
 	}
 
-	
+	/**
+     * call openWeatherMapApi
+     * @param $string city name 
+     * @param int $day 
+     * @return array of data
+     */
 	public function getTemperature($city, $day) 
 	{	
 		//prepare url to the api
 		$queryParameters = http_build_query([
-			'id' => $city,
+			'q' => $city,
 			'cnt' => $day,
 			'units' => $this->units,
 			'APPID' => $this->appId,
 		]);
 
 		$url = "{$this->url}?{$queryParameters}";
+	
 		//get contents from OpenWeatherMap api
-		$contents = @file_get_contents($url);
+		try {
+			$contents = file_get_contents(urldecode($url));
+		} catch (\Exception $e) {
+			throw new \Exception(trans('error.missingData'), 1);
+		}
 
 		if ($contents) {
 			$weather = json_decode($contents);
@@ -42,7 +69,6 @@ class OpenWeatherMapService implements WeatherServiceInterface
 			$tempMax = [];
 			$tempMin = [];
 			$icon = [];
-			$dates = [];
 
 			foreach ($weather->list as $list) {
 				$tempMax[] = $list->main->temp_max;
