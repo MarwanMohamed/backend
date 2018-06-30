@@ -2,14 +2,6 @@
 
 namespace App\Services;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Promise;
-use GuzzleHttp\Handler\CurlMultiHandler;
-use GuzzleHttp\HandlerStack;
-use Psr\Http\Message\ResponseInterface;
-use GuzzleHttp\Exception\RequestException;
-
-
 class MultipleSourcesService implements WeatherServiceInterface 
 {
 	/**
