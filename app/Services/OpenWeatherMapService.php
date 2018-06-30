@@ -42,7 +42,7 @@ class OpenWeatherMapService implements WeatherServiceInterface
      * call openWeatherMapApi
      * @param $string city name 
      * @param int $day 
-     * @return array of data
+     * @return array
      */
 	public function getTemperature($city, $day) 
 	{	

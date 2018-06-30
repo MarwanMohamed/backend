@@ -8,7 +8,8 @@ use App\City;
 class CitiesRepository
 {
     /**
-	 * @return all cities from database
+	 * get all cities from database
+	 * @return json
 	*/
     public function getCities()
     {

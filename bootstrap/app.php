@@ -24,11 +24,18 @@ $app = new Laravel\Lumen\Application(
 );
 
 config([
-
     'OpenWeatherMap' => [
-        'url' => env('OPEN_WEATHER_MAP_URL'),
+        'url'   => env('OPEN_WEATHER_MAP_URL'),
         'appId' => env('OPEN_WEATHER_MAP_APP_ID'),
         'units' => env('OPEN_WEATHER_MAP_UNITS'),
+    ],
+]);
+
+config([
+    'AccuWeatherMap' => [
+        'apiUrl'     => env('ACCU_WEATHER_MAP_URL'),
+        'cityApiURL' => env('ACCU_CITY_API_URL'),
+        'apiId'      => env('ACCU_API_KEY')
     ],
 ]);
 

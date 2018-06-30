@@ -27,6 +27,7 @@ class CitiesController extends Controller
 
     /**
 	 *	get all cities from repository class
+    *   @return json
 	*/
     public function getCities()
     {

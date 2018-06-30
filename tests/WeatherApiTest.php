@@ -8,17 +8,14 @@ class WeatherApiTest extends TestCase
 {
     use WeatherStructure;
 
-
     public function test_weather()
     {
-        $respon = $this->json('get', 'api/getTemprature/360630, 30-06-2018');
-        dd(get_class($respon));
+        $respon = $this->json('get', 'api/getTemprature/cairo/13-06-2018');
 	    $this->assertInstanceOf('Illuminate\Http\JsonResponse', $respon);
     }
 
-
-   //  public function test_weather_structure()
-   //  {
-	 	// $this->json('get', 'api/getTemprature/360630, 30-06-2018')->seeJsonStructure(['*' => $this->weatherStructure()]);
-   //  }
+    public function test_weather_json_structure()
+    {
+	 	$this->json('get', 'api/getTemprature/cairo/13-06-2018')->seeJsonStructure(['*' => $this->weatherStructure()]);
+    }
 }

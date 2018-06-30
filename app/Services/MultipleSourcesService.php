@@ -12,7 +12,6 @@ use GuzzleHttp\Exception\RequestException;
 
 class MultipleSourcesService implements WeatherServiceInterface 
 {
-
 	/**
      * @var url
      */
@@ -53,8 +52,9 @@ class MultipleSourcesService implements WeatherServiceInterface
      */
 	public function getTemperature($city, $day) 
 	{
-
 		$cityId = $this->getIdOfCityName($city);
+
+		//prepare url to the api
 		$queryParameters = http_build_query([
 			'q' => $city,
 			'cnt' => $day,
@@ -63,11 +63,9 @@ class MultipleSourcesService implements WeatherServiceInterface
 		]);
 
 		$openWeatherApiUrl = "{$this->url}?{$queryParameters}";
-		$accuWeatherApiUrl =  "http://dataservice.accuweather.com/forecasts/v1/daily/5day/".$cityId."?apikey=wdGAELAtysipPGe8H8A97awBLCYkxEt8&language=en&details=true&metric=true";
-
-
+		$accuWeatherApiUrl =  config('AccuWeatherMap.apiUrl'). $cityId. "?apikey=" .config('AccuWeatherMap.apiId');
+		
 		$apisRespons = $this->callApis($openWeatherApiUrl, $accuWeatherApiUrl);
-
 		return $this->getDataOfApis($apisRespons);
 	}
 
@@ -108,7 +106,7 @@ class MultipleSourcesService implements WeatherServiceInterface
      * return average of two apis
      * @param array $openWeatherData
      * @param array $accWeatherData
-     * @return array of data
+     * @return array
      */
 	private function getAverage($openWeatherData, $accWeatherData)
 	{
@@ -130,7 +128,7 @@ class MultipleSourcesService implements WeatherServiceInterface
      * Async openWeatherApi, accuWeatherApi
      * @param string $openWeatherApiUrl
      * @param string $accuWeatherApiUrl
-     * @return array of data
+     * @return array
      */
 	private function callApis($openWeatherApiUrl, $accuWeatherApiUrl)
 	{
@@ -158,8 +156,7 @@ class MultipleSourcesService implements WeatherServiceInterface
      */
 	private function getIdOfCityName($city)
 	{
-		$url = "http://dataservice.accuweather.com/locations/v1/cities/search?apikey=wdGAELAtysipPGe8H8A97awBLCYkxEt8&q=$city";
-
+		$url = config('AccuWeatherMap.cityApiURL') .$city;
 		try {
 			$city = json_decode(file_get_contents($url));
 			return $city[0]->Key;

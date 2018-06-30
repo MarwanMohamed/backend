@@ -6,6 +6,6 @@ trait WeatherStructure
 {
     public function weatherStructure($additional = [])
     {
-        return array_merge(['name', 'max', 'min', 'icon'], $additional);
+        return array_merge(['max', 'min', 'icon', 'name'], $additional);
     }
 }

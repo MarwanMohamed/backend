@@ -7,12 +7,12 @@ use Carbon\Carbon;
 
 class WeatherController extends Controller
 {
-   /*
+   /**
+	 * return temperature of city
 	 * @param str $city
 	 * @param str $day
-	 *	return temperature of city
+	 * @return json
 	*/
-
     public function getWeatherTemperature($city, $day)
 	{	
 		// validate if any param missing
@@ -24,7 +24,7 @@ class WeatherController extends Controller
 		$day = Carbon::parse($day);
 		$numberOfDays = ($day->diffInDays(Carbon::now()->subHours(23)));
 		//call the api to get temperature
-		$temperatureService = WeatherServiceFactory::make('MultipleSourcesService');
+		$temperatureService = WeatherServiceFactory::make('OpenWeatherMapService');
 		$temperature = $temperatureService->getTemperature($city, $numberOfDays);
 		return response()->json($temperature, 200);
 	}
